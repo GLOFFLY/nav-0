@@ -171,6 +171,9 @@ window.onbeforeunload = function () {
   localStorage.setItem('remember', string);
 };
 
+$('.word').on('keypress', function (e) {
+  e.stopPropagation();
+});
 $(document).on('keypress', function (e) {
   var key = e.key;
 
@@ -181,4 +184,4 @@ $(document).on('keypress', function (e) {
   }
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.7aa1e6ed.js.map
+//# sourceMappingURL=main.cfca2ba6.js.map

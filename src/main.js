@@ -58,6 +58,9 @@ window.onbeforeunload = () => {
     const string = JSON.stringify(hashMap);
     localStorage.setItem('remember', string);
 }
+
+$('.word').on('keypress', (e) => { e.stopPropagation() });
+
 $(document).on('keypress', (e) => {
     const { key } = e
     for (let i = 0; i < hashMap.length; i++) {

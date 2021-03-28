@@ -8,7 +8,6 @@ img{max-width: 100%; max-height: 100%;}
 body{
     min-height: 100vh;
     min-width: 100vw;
-    //background: #eee;
     background-image: url("images/sjbg.jpg");
     background-size: 100% 100%;
 }
