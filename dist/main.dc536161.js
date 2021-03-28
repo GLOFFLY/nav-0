@@ -123,23 +123,21 @@ var $lastLi = $siteList.find('li.last');
 var remember = localStorage.getItem('remember');
 var rememberObject = JSON.parse(remember);
 var hashMap = rememberObject || [{
-  logo: 'A',
-  logoType: 'text',
   url: 'https://www.acfun.cn'
 }, {
-  logo: 'B',
-  logoType: 'image',
   url: 'https://www.bilibili.com'
 }];
 
 var simplifyUrl = function simplifyUrl(url) {
-  return url.replace('https://', '').replace('http://', '').replace('www.', '').replace(/\/.*/, ''); //删除以/开头的内容
+  return url.replace('https://', '').replace('http://', '') //.replace('www.', '')
+  .replace(/\/.*/, ''); //删除以/开头的内容
 };
 
 var render = function render() {
   $siteList.find('li:not(.last)').remove();
   hashMap.forEach(function (node, index) {
-    var $li = $("\n                <li>\n                    <a href=\"".concat(node.url, "\">\n                        <div class=\"site\">\n                            <div class=\"logo\">").concat(node.logo[0], "</div>\n                            <div class=\"link\">").concat(simplifyUrl(node.url), "</div>\n                            <div class=\"close\">\n                                <svg class=\"icon\">\n                                    <use xlink:href=\"#iconclose\"></use>\n                                </svg>\n                            </div>\n                        </div>\n                    </a>\n                </li>\n            ")).insertBefore($lastLi);
+    //<div class="logo">${node.logo[0]}</div>
+    var $li = $("\n                <li>\n                    <a href=\"".concat(node.url, "\">\n                        <div class=\"site\">\n                            \n                            <div class=\"logo\">\n                                <img src='https://").concat(simplifyUrl(node.url), "/favicon.ico' onerror=\"faviconOnErr(this)\"/>\n                            </div>\n                            <div class=\"link\">").concat(simplifyUrl(node.url).replace('www.', ''), "</div>\n                            <div class=\"close\">\n                                <svg class=\"icon\">\n                                    <use xlink:href=\"#iconclose\"></use>\n                                </svg>\n                            </div>\n                        </div>\n                    </a>\n                </li>\n            ")).insertBefore($lastLi);
     $li.on('click', '.close', function (e) {
       hashMap.splice(index, 1);
       render(); //e.preventDefault();
@@ -183,5 +181,10 @@ $(document).on('keypress', function (e) {
     }
   }
 });
+
+faviconOnErr = function faviconOnErr(e) {
+  $(" <svg class=\"icon\"><use xlink:href=\"#icondefault\"></use></svg>").insertBefore($(e));
+  $(e).remove();
+};
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.cfca2ba6.js.map
+//# sourceMappingURL=main.dc536161.js.map

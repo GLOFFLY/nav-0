@@ -3,25 +3,28 @@ const $lastLi = $siteList.find('li.last');
 const remember = localStorage.getItem('remember');
 const rememberObject = JSON.parse(remember);
 const hashMap = rememberObject || [
-    { logo: 'A', logoType: 'text', url: 'https://www.acfun.cn' },
-    { logo: 'B', logoType: 'image', url: 'https://www.bilibili.com' }
+    { url: 'https://www.acfun.cn' },
+    { url: 'https://www.bilibili.com' }
 ];
 const simplifyUrl = (url) => {
     return url.replace('https://', '')
         .replace('http://', '')
-        .replace('www.', '')
+        //.replace('www.', '')
         .replace(/\/.*/, '')//删除以/开头的内容
 };
 
 const render = () => {
     $siteList.find('li:not(.last)').remove();
-    hashMap.forEach((node, index) => {
+    hashMap.forEach((node, index) => {//<div class="logo">${node.logo[0]}</div>
         const $li = $(`
                 <li>
                     <a href="${node.url}">
                         <div class="site">
-                            <div class="logo">${node.logo[0]}</div>
-                            <div class="link">${simplifyUrl(node.url)}</div>
+                            
+                            <div class="logo">
+                                <img src='https://${simplifyUrl(node.url)}/favicon.ico' onerror="faviconOnErr(this)"/>
+                            </div>
+                            <div class="link">${simplifyUrl(node.url).replace('www.', '')}</div>
                             <div class="close">
                                 <svg class="icon">
                                     <use xlink:href="#iconclose"></use>
@@ -69,3 +72,8 @@ $(document).on('keypress', (e) => {
         }
     }
 })
+
+faviconOnErr = (e) => {
+    $(` <svg class="icon"><use xlink:href="#icondefault"></use></svg>`).insertBefore($(e))
+    $(e).remove()
+}
